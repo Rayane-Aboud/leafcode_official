@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="no-js">
+<head>
+  <script>document.documentElement.classList.remove('no-js'); document.documentElement.classList.add('js');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leaf Code — Better Tools. Better Decisions.</title>
+  <meta name="description" content="Leaf Code is an Algerian AgriTech company designing precision agriculture and smart farming solutions — drones, IoT, AI, and agronomic platforms for crops, orchards, and livestock." />
+
+  <!-- SEO -->
+  <meta property="og:title" content="Leaf Code — Better Tools. Better Decisions." />
+  <meta property="og:description" content="Precision agriculture and smart farming solutions built in Algeria." />
+  <meta property="og:type" content="website" />
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            leaf: {
+              50:  '#f1f8f1',
+              100: '#dceee0',
+              200: '#b9dcc1',
+              300: '#8cc398',
+              400: '#5fa66e',
+              500: '#3f8a51',
+              600: '#2e6e3f',
+              700: '#255735',
+              800: '#1d442a',
+              900: '#142e1d',
+              950: '#0a1a10',
+            },
+            sand: {
+              50:  '#faf7f2',
+              100: '#f1ebde',
+              200: '#e3d6bd',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+            arabic: ['"Noto Kufi Arabic"', '"Cairo"', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'ui-sans-serif', 'system-ui'],
+          },
+          boxShadow: {
+            soft: '0 10px 40px -10px rgba(20, 46, 29, 0.18)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Dynamic effect libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/bundled/lenis.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js" defer></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-feature-settings: "ss01", "cv11"; }
+
+    /* Arabic typography overrides when in RTL */
+    html[dir="rtl"] body { font-family: 'Noto Kufi Arabic', system-ui, sans-serif; }
+    html[dir="rtl"] .font-display { font-family: 'Noto Kufi Arabic', system-ui, sans-serif; }
+
+    /* Animated gradient backdrop for hero */
+    .hero-grid {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(95, 166, 110, 0.22) 0, transparent 40%),
+        radial-gradient(circle at 80% 10%, rgba(46, 110, 63, 0.24) 0, transparent 45%),
+        radial-gradient(circle at 50% 100%, rgba(63, 138, 81, 0.18) 0, transparent 50%),
+        linear-gradient(180deg, #0a1a10 0%, #142e1d 100%);
+      background-size: 200% 200%, 200% 200%, 200% 200%, 100% 100%;
+      animation: aurora 18s ease-in-out infinite alternate;
+    }
+    @keyframes aurora {
+      0%   { background-position: 0% 0%, 100% 0%, 50% 100%, 0 0; }
+      100% { background-position: 30% 20%, 70% 30%, 60% 80%, 0 0; }
+    }
+    .topo {
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 32px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 32px);
+    }
+
+    /* Cursor-following glow on hero */
+    .cursor-glow {
+      position: absolute;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(140,195,152,0.18), transparent 60%);
+      pointer-events: none;
+      transform: translate3d(-50%, -50%, 0);
+      transition: opacity .4s ease;
+      opacity: 0;
+      mix-blend-mode: screen;
+      z-index: 0;
+    }
+
+    /* Hide elements of the non-active language */
+    [data-lang]:not(.lang-active) { display: none; }
+
+    /* Language pill */
+    .lang-btn[aria-pressed="true"] { background: #2e6e3f; color: #fff; }
+
+    /* RTL list bullet fix */
+    html[dir="rtl"] ul.bullet-list { padding-right: 1.25rem; padding-left: 0; }
+
+    /* Service-card icon micro-interaction */
+    .service-card:hover .service-icon { transform: translateY(-3px) rotate(-3deg); }
+    .service-icon { transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
+
+    /* ---- Headline word rotator ---- */
+    .rotator { position: relative; display: inline-block; vertical-align: baseline; min-width: 6ch; }
+    .rotator > span {
+      position: absolute; left: 0; top: 0;
+      opacity: 0; transform: translateY(0.4em) rotateX(-30deg);
+      transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1);
+      white-space: nowrap;
+    }
+    .rotator > span.active {
+      position: relative; opacity: 1;
+      transform: translateY(0) rotateX(0);
+    }
+
+    /* ---- Marquee (tech stack) ---- */
+    .marquee {
+      display: flex; gap: 3rem;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+    html[dir="rtl"] .marquee { animation-direction: reverse; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee:hover { animation-play-state: paused; }
+
+    /* ---- Drone flight path animation ---- */
+    .drone-path {
+      stroke-dasharray: 8 6;
+      animation: dash 1.2s linear infinite;
+    }
+    @keyframes dash { to { stroke-dashoffset: -28; } }
+
+    /* ---- Trust cards — drifting badge glow + propeller spin ---- */
+    /* Animate a pseudo-element ring so the icon's own transform is free for hover */
+    .trust-icon::before {
+      content: '';
+      position: absolute; inset: -6px;
+      border-radius: 14px;
+      background: conic-gradient(from 0deg, transparent, currentColor, transparent 30%);
+      filter: blur(8px);
+      opacity: 0;
+      animation: badgeSweep 4.5s linear infinite;
+    }
+    .trust-card:hover .trust-icon::before { opacity: .6; }
+    @keyframes badgeSweep { to { transform: rotate(360deg); } }
+
+    /* Drone propellers — opacity flicker simulates spin */
+    .trust-card svg .prop line {
+      animation: propspin .2s steps(2, end) infinite;
+    }
+    .trust-card svg .prop:nth-of-type(2) line { animation-delay: .04s; }
+    .trust-card svg .prop:nth-of-type(3) line { animation-delay: .08s; }
+    .trust-card svg .prop:nth-of-type(4) line { animation-delay: .12s; }
+    @keyframes propspin {
+      0%   { opacity: 1; }
+      50%  { opacity: .3; }
+      100% { opacity: 1; }
+    }
+
+    /* Numbered ribbon "2024" pulse on trophy card */
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(252, 211, 77, 0); }
+      50%      { box-shadow: 0 0 20px 2px rgba(252, 211, 77, .25); }
+    }
+    .trust-card:nth-child(1) .trust-icon {
+      animation: glowPulse 3.2s ease-in-out infinite;
+    }
+
+    /* ---- Pulsing IoT sensor dots ---- */
+    .iot-dot {
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    .iot-dot:nth-child(2) { animation-delay: .4s; }
+    .iot-dot:nth-child(3) { animation-delay: .8s; }
+    .iot-dot:nth-child(4) { animation-delay: 1.2s; }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: .85; }
+      50%      { transform: scale(1.35); opacity: 1; }
+    }
+
+    /* ---- Button shine ---- */
+    .btn-shine { position: relative; overflow: hidden; }
+    .btn-shine::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.25) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform .8s ease;
+    }
+    .btn-shine:hover::after { transform: translateX(100%); }
+
+    /* ---- Active nav link underline ---- */
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px;
+      background: #2e6e3f; transform: scaleX(0); transform-origin: left;
+      transition: transform .3s ease;
+    }
+    html[dir="rtl"] .nav-link::after { transform-origin: right; }
+    .nav-link.active::after, .nav-link:hover::after { transform: scaleX(1); }
+
+    /* ---- Reveal classes used by GSAP (hidden until JS runs to prevent flash) ---- */
+    .gsap-reveal, .gsap-stagger > * { will-change: transform, opacity; }
+    .js .gsap-reveal,
+    .js .gsap-stagger > *,
+    .js .reveal,
+    .js .trust-card { opacity: 0; }
+    .no-js .gsap-reveal,
+    .no-js .gsap-stagger > *,
+    .no-js .reveal,
+    .no-js .trust-card { opacity: 1; }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .marquee, .drone-path, .iot-dot, .hero-grid { animation: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-sand-50 text-leaf-950 antialiased">
+
+  <!-- ====================== NAV ====================== -->
+  <header id="site-nav" class="fixed top-0 inset-x-0 z-50 backdrop-blur bg-white/85 border-b border-leaf-100">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-2 group">
+        <svg viewBox="0 0 32 32" class="w-8 h-8 text-leaf-600 group-hover:text-leaf-700 transition" fill="currentColor" aria-hidden="true">
+          <path d="M16 2C9 2 3 8 3 16c0 7 5 13 13 14 0-7 4-13 10-15-1-7-5-13-10-13zm0 6c4 0 7 4 7 8s-3 8-7 8c0-5 3-9 7-10-4 1-7 4-7 6V8z"/>
+        </svg>
+        <span class="font-display font-bold text-lg tracking-tight">Leaf<span class="text-leaf-600">Code</span></span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium">
+        <a href="#about"    class="nav-link hover:text-leaf-700"><span data-lang="en" class="lang-active">About</span><span data-lang="fr">À propos</span><span data-lang="ar">من نحن</span></a>
+        <a href="#services" class="nav-link hover:text-leaf-700"><span data-lang="en" class="lang-active">Services</span><span data-lang="fr">Services</span><span data-lang="ar">الخدمات</span></a>
+        <a href="#products" class="nav-link hover:text-leaf-700"><span data-lang="en" class="lang-active">Products</span><span data-lang="fr">Produits</span><span data-lang="ar">المنتجات</span></a>
+        <a href="#why"      class="nav-link hover:text-leaf-700"><span data-lang="en" class="lang-active">Why us</span><span data-lang="fr">Pourquoi nous</span><span data-lang="ar">لماذا نحن</span></a>
+        <a href="#contact"  class="nav-link hover:text-leaf-700"><span data-lang="en" class="lang-active">Contact</span><span data-lang="fr">Contact</span><span data-lang="ar">تواصل</span></a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <div class="hidden sm:flex items-center gap-1 bg-leaf-50 border border-leaf-100 rounded-full p-1 text-xs font-semibold">
+          <button class="lang-btn px-3 py-1 rounded-full" data-set-lang="en" aria-pressed="true">EN</button>
+          <button class="lang-btn px-3 py-1 rounded-full" data-set-lang="fr" aria-pressed="false">FR</button>
+          <button class="lang-btn px-3 py-1 rounded-full" data-set-lang="ar" aria-pressed="false">AR</button>
+        </div>
+        <a href="#contact" class="hidden md:inline-flex items-center gap-2 bg-leaf-700 hover:bg-leaf-800 text-white text-sm font-semibold px-4 py-2 rounded-full transition">
+          <span data-lang="en" class="lang-active">Talk to Us</span>
+          <span data-lang="fr">Parlons-en</span>
+          <span data-lang="ar">تحدث معنا</span>
+          <svg class="w-4 h-4 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+
+        <!-- Mobile menu toggle -->
+        <button id="mobile-toggle" class="md:hidden p-2 rounded-lg hover:bg-leaf-50" aria-label="Open menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu panel -->
+    <div id="mobile-menu" class="md:hidden hidden border-t border-leaf-100 bg-white">
+      <nav class="px-5 py-4 flex flex-col gap-3 text-sm font-medium">
+        <a href="#about"    class="py-1.5"><span data-lang="en" class="lang-active">About</span><span data-lang="fr">À propos</span><span data-lang="ar">من نحن</span></a>
+        <a href="#services" class="py-1.5"><span data-lang="en" class="lang-active">Services</span><span data-lang="fr">Services</span><span data-lang="ar">الخدمات</span></a>
+        <a href="#products" class="py-1.5"><span data-lang="en" class="lang-active">Products</span><span data-lang="fr">Produits</span><span data-lang="ar">المنتجات</span></a>
+        <a href="#why"      class="py-1.5"><span data-lang="en" class="lang-active">Why us</span><span data-lang="fr">Pourquoi nous</span><span data-lang="ar">لماذا نحن</span></a>
+        <a href="#contact"  class="py-1.5"><span data-lang="en" class="lang-active">Contact</span><span data-lang="fr">Contact</span><span data-lang="ar">تواصل</span></a>
+        <div class="flex items-center gap-1 bg-leaf-50 border border-leaf-100 rounded-full p-1 text-xs font-semibold w-max">
+          <button class="lang-btn px-3 py-1 rounded-full" data-set-lang="en" aria-pressed="true">EN</button>
+          <button class="lang-btn px-3 py-1 rounded-full" data-set-lang="fr" aria-pressed="false">FR</button>
+          <button class="lang-btn px-3 py-1 rounded-full" data-set-lang="ar" aria-pressed="false">AR</button>
+        </div>
+        <a href="#contact" class="inline-flex items-center justify-center gap-2 bg-leaf-700 text-white text-sm font-semibold px-4 py-2 rounded-full mt-2">
+          <span data-lang="en" class="lang-active">Talk to Us</span>
+          <span data-lang="fr">Parlons-en</span>
+          <span data-lang="ar">تحدث معنا</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ====================== HERO ====================== -->
+    <section class="hero-grid text-white pt-32 pb-24 lg:pt-40 lg:pb-32 relative overflow-hidden" id="hero">
+      <div class="topo absolute inset-0 opacity-50 pointer-events-none"></div>
+      <div id="cursor-glow" class="cursor-glow"></div>
+      <div class="max-w-7xl mx-auto px-5 lg:px-8 relative">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+          <div class="lg:col-span-7 gsap-reveal">
+            <span class="inline-flex items-center gap-2 text-xs font-semibold bg-white/10 border border-white/15 px-3 py-1.5 rounded-full mb-6 backdrop-blur">
+              <span class="relative flex w-2 h-2">
+                <span class="absolute inline-flex h-full w-full rounded-full bg-leaf-300 opacity-75 animate-ping"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-leaf-300"></span>
+              </span>
+              <span data-lang="en" class="lang-active">Algerian AgriTech · Built for the field</span>
+              <span data-lang="fr">AgriTech algérienne · Conçue pour le terrain</span>
+              <span data-lang="ar">تقنية زراعية جزائرية · مصممة للحقل</span>
+            </span>
+
+            <h1 class="font-display font-extrabold tracking-tight text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
+              <span data-lang="en" class="lang-active">
+                Better <span class="rotator text-leaf-300" data-rotate-en='["Tools.","Drones.","Data.","Insights."]'><span class="active">Tools.</span></span><br/>
+                <span class="text-leaf-300">Better Decisions.</span>
+              </span>
+              <span data-lang="fr">
+                De meilleurs <span class="rotator text-leaf-300" data-rotate-fr='["outils.","drones.","données.","décisions."]'><span class="active">outils.</span></span><br/>
+                <span class="text-leaf-300">De meilleures décisions.</span>
+              </span>
+              <span data-lang="ar">
+                <span class="rotator text-leaf-300" data-rotate-ar='["أدوات","طائرات","بيانات","تحليل"]'><span class="active">أدوات</span></span> أفضل.<br/>
+                <span class="text-leaf-300">قرارات أفضل.</span>
+              </span>
+            </h1>
+
+            <p class="mt-6 text-lg text-leaf-100/90 max-w-2xl leading-relaxed">
+              <span data-lang="en" class="lang-active">We design and develop precision agriculture technology and smart farming systems — for field crops, orchards, and livestock operations. From custom software to drone systems, IoT sensors to agronomic platforms: everything we build exists to give you clearer data and sharper decisions.</span>
+              <span data-lang="fr">Nous concevons et développons des solutions technologiques pour l'agriculture de précision et le smart farming — grandes cultures, arboriculture et élevage. Logiciels sur mesure, systèmes de drones, capteurs IoT, plateformes agronomiques : tout ce que nous créons a un seul objectif — vous donner des données claires pour prendre de meilleures décisions.</span>
+              <span data-lang="ar">نصمم ونطور حلول تقنية للزراعة الدقيقة والزراعة الذكية — للمحاصيل الكبيرة والبساتين والثروة الحيوانية. من البرمجيات المخصصة إلى أنظمة الطائرات المسيّرة، ومن أجهزة الاستشعار IoT إلى المنصات الزراعية: كل ما نبنيه هدفه واحد — بيانات أوضح، وقرارات أفضل.</span>
+            </p>
+
+            <div class="mt-8 flex flex-wrap items-center gap-3">
+              <a href="#contact" class="btn-shine inline-flex items-center gap-2 bg-leaf-500 hover:bg-leaf-400 text-leaf-950 font-semibold px-6 py-3 rounded-full transition">
+                <span data-lang="en" class="lang-active">Talk to Us</span>
+                <span data-lang="fr">Parlons-en</span>
+                <span data-lang="ar">تحدث معنا</span>
+                <svg class="w-4 h-4 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </a>
+              <a href="#products" class="btn-shine inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold px-6 py-3 rounded-full transition">
+                <span data-lang="en" class="lang-active">Discover Our Products</span>
+                <span data-lang="fr">Découvrir nos produits</span>
+                <span data-lang="ar">اكتشف منتجاتنا</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right side: data → dashboard visual -->
+          <div class="lg:col-span-5 gsap-reveal">
+            <div class="relative">
+              <div class="absolute -inset-6 bg-leaf-500/15 rounded-3xl blur-2xl animate-pulse"></div>
+              <div class="relative bg-leaf-900/80 border border-leaf-700/50 rounded-2xl p-5 shadow-soft">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-400/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-300/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-leaf-300"></span>
+                  </div>
+                  <span class="text-[10px] uppercase tracking-widest text-leaf-200/70">X-Crop · Live</span>
+                </div>
+
+                <!-- Pseudo heatmap with animated drone fly-over -->
+                <div class="relative mb-4">
+                  <div id="heatmap" class="grid grid-cols-12 gap-1"></div>
+
+                  <!-- IoT sensor dots overlay -->
+                  <div class="absolute inset-0 pointer-events-none">
+                    <span class="iot-dot absolute w-2 h-2 rounded-full bg-leaf-200 shadow-[0_0_10px_2px_rgba(140,195,152,0.7)]" style="top: 22%; left: 18%;"></span>
+                    <span class="iot-dot absolute w-2 h-2 rounded-full bg-leaf-200 shadow-[0_0_10px_2px_rgba(140,195,152,0.7)]" style="top: 60%; left: 42%;"></span>
+                    <span class="iot-dot absolute w-2 h-2 rounded-full bg-leaf-200 shadow-[0_0_10px_2px_rgba(140,195,152,0.7)]" style="top: 38%; left: 68%;"></span>
+                    <span class="iot-dot absolute w-2 h-2 rounded-full bg-leaf-200 shadow-[0_0_10px_2px_rgba(140,195,152,0.7)]" style="top: 78%; left: 82%;"></span>
+                  </div>
+
+                  <!-- Drone flight path SVG -->
+                  <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 100" preserveAspectRatio="none">
+                    <path class="drone-path" d="M 10 80 Q 80 10, 150 50 T 290 30" fill="none" stroke="#b9dcc1" stroke-width="1.2" opacity="0.6"/>
+                    <g id="drone-sprite">
+                      <circle r="3.2" fill="#dceee0"/>
+                      <circle r="1.4" fill="#3f8a51"/>
+                    </g>
+                  </svg>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3 text-center">
+                  <div class="bg-leaf-800/70 rounded-xl py-3">
+                    <div class="text-2xl font-bold text-leaf-200">94%</div>
+                    <div class="text-[10px] uppercase tracking-wider text-leaf-300/80">
+                      <span data-lang="en" class="lang-active">Crop health</span>
+                      <span data-lang="fr">Santé</span>
+                      <span data-lang="ar">الصحة</span>
+                    </div>
+                  </div>
+                  <div class="bg-leaf-800/70 rounded-xl py-3">
+                    <div class="text-2xl font-bold text-leaf-200">22.4°</div>
+                    <div class="text-[10px] uppercase tracking-wider text-leaf-300/80">
+                      <span data-lang="en" class="lang-active">Soil temp</span>
+                      <span data-lang="fr">Sol</span>
+                      <span data-lang="ar">التربة</span>
+                    </div>
+                  </div>
+                  <div class="bg-leaf-800/70 rounded-xl py-3">
+                    <div class="text-2xl font-bold text-leaf-200">63%</div>
+                    <div class="text-[10px] uppercase tracking-wider text-leaf-300/80">
+                      <span data-lang="en" class="lang-active">Moisture</span>
+                      <span data-lang="fr">Humidité</span>
+                      <span data-lang="ar">الرطوبة</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust bar -->
+        <div class="mt-16 lg:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4">
+
+          <!-- Card 1 — Trophy -->
+          <div class="trust-card group relative overflow-hidden flex items-center gap-3.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-leaf-400/40 rounded-2xl p-4 transition-all duration-300 cursor-default backdrop-blur">
+            <div class="absolute -top-12 -right-12 w-24 h-24 rounded-full bg-amber-400/0 group-hover:bg-amber-400/20 blur-2xl transition-all duration-500"></div>
+            <div class="trust-icon relative w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400/25 to-amber-600/10 border border-amber-300/30 grid place-items-center flex-shrink-0 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">
+              <svg class="w-5 h-5 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                <path d="M4 22h16"/>
+                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+              </svg>
+              <span class="absolute inset-0 rounded-xl ring-2 ring-amber-300/0 group-hover:ring-amber-300/40 transition-all"></span>
+            </div>
+            <div class="text-xs leading-snug">
+              <div class="font-bold text-white text-sm">
+                <span data-lang="en" class="lang-active">AgriTech Challenge</span>
+                <span data-lang="fr">AgriTech Challenge</span>
+                <span data-lang="ar">AgriTech Challenge</span>
+              </div>
+              <div class="text-leaf-200/80 mt-0.5">
+                <span data-lang="en" class="lang-active">2024 Winner</span>
+                <span data-lang="fr">Lauréat 2024</span>
+                <span data-lang="ar">الفائز 2024</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 — Handshake -->
+          <div class="trust-card group relative overflow-hidden flex items-center gap-3.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-leaf-400/40 rounded-2xl p-4 transition-all duration-300 cursor-default backdrop-blur">
+            <div class="absolute -top-12 -right-12 w-24 h-24 rounded-full bg-sky-400/0 group-hover:bg-sky-400/20 blur-2xl transition-all duration-500"></div>
+            <div class="trust-icon relative w-11 h-11 rounded-xl bg-gradient-to-br from-sky-400/25 to-sky-600/10 border border-sky-300/30 grid place-items-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+              <svg class="w-5 h-5 text-sky-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m11 17 2 2a1 1 0 1 0 3-3"/>
+                <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/>
+                <path d="m21 3 1 11h-2"/>
+                <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/>
+                <path d="M3 4h8"/>
+              </svg>
+              <span class="absolute inset-0 rounded-xl ring-2 ring-sky-300/0 group-hover:ring-sky-300/40 transition-all"></span>
+            </div>
+            <div class="text-xs leading-snug">
+              <div class="font-bold text-white text-sm">GIZ Algeria</div>
+              <div class="text-leaf-200/80 mt-0.5">
+                <span data-lang="en" class="lang-active">Official Partner</span>
+                <span data-lang="fr">Partenaire officiel</span>
+                <span data-lang="ar">شريك رسمي</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 — Precision / Sprout -->
+          <div class="trust-card group relative overflow-hidden flex items-center gap-3.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-leaf-400/40 rounded-2xl p-4 transition-all duration-300 cursor-default backdrop-blur">
+            <div class="absolute -top-12 -right-12 w-24 h-24 rounded-full bg-leaf-400/0 group-hover:bg-leaf-400/25 blur-2xl transition-all duration-500"></div>
+            <div class="trust-icon relative w-11 h-11 rounded-xl bg-gradient-to-br from-leaf-400/25 to-leaf-700/15 border border-leaf-300/40 grid place-items-center flex-shrink-0 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">
+              <svg class="w-5 h-5 text-leaf-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 20h10"/>
+                <path d="M10 20c5.5-2.5.8-6.4 3-10"/>
+                <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/>
+                <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>
+              </svg>
+              <span class="absolute inset-0 rounded-xl ring-2 ring-leaf-300/0 group-hover:ring-leaf-300/40 transition-all"></span>
+            </div>
+            <div class="text-xs leading-snug">
+              <div class="font-bold text-white text-sm">
+                <span data-lang="en" class="lang-active">Precision Engineers</span>
+                <span data-lang="fr">Ingénieurs précision</span>
+                <span data-lang="ar">مهندسو الدقة</span>
+              </div>
+              <div class="text-leaf-200/80 mt-0.5">
+                <span data-lang="en" class="lang-active">Agronomy + Code</span>
+                <span data-lang="fr">Agronomie + Code</span>
+                <span data-lang="ar">زراعة + برمجة</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 — Drone -->
+          <div class="trust-card group relative overflow-hidden flex items-center gap-3.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-leaf-400/40 rounded-2xl p-4 transition-all duration-300 cursor-default backdrop-blur">
+            <div class="absolute -top-12 -right-12 w-24 h-24 rounded-full bg-fuchsia-400/0 group-hover:bg-fuchsia-400/20 blur-2xl transition-all duration-500"></div>
+            <div class="trust-icon relative w-11 h-11 rounded-xl bg-gradient-to-br from-fuchsia-400/25 to-fuchsia-700/10 border border-fuchsia-300/30 grid place-items-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+              <!-- Drone SVG with spinning propellers -->
+              <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" stroke="#f0abfc" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Frame arms -->
+                <line x1="9" y1="9" x2="14" y2="14"/>
+                <line x1="23" y1="9" x2="18" y2="14"/>
+                <line x1="9" y1="23" x2="14" y2="18"/>
+                <line x1="23" y1="23" x2="18" y2="18"/>
+                <!-- Body -->
+                <rect x="13" y="13" width="6" height="6" rx="1.5" fill="#f0abfc22"/>
+                <!-- Propellers (animate spin) -->
+                <g class="prop"><line x1="6" y1="9"  x2="12" y2="9"/></g>
+                <g class="prop"><line x1="20" y1="9"  x2="26" y2="9"/></g>
+                <g class="prop"><line x1="6" y1="23" x2="12" y2="23"/></g>
+                <g class="prop"><line x1="20" y1="23" x2="26" y2="23"/></g>
+              </svg>
+              <span class="absolute inset-0 rounded-xl ring-2 ring-fuchsia-300/0 group-hover:ring-fuchsia-300/40 transition-all"></span>
+            </div>
+            <div class="text-xs leading-snug">
+              <div class="font-bold text-white text-sm">DGACM</div>
+              <div class="text-leaf-200/80 mt-0.5">
+                <span data-lang="en" class="lang-active">Class II Certified</span>
+                <span data-lang="fr">Drones certifiés Classe II</span>
+                <span data-lang="ar">طائرات معتمدة فئة II</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== ABOUT ====================== -->
+    <section id="about" class="py-24 lg:py-32 bg-sand-50 reveal">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8 grid lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-5">
+          <span class="inline-block text-xs font-bold tracking-widest text-leaf-600 uppercase mb-4">
+            <span data-lang="en" class="lang-active">About Leaf Code</span>
+            <span data-lang="fr">À propos de Leaf Code</span>
+            <span data-lang="ar">من نحن</span>
+          </span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight text-leaf-900">
+            <span data-lang="en" class="lang-active">Built by engineers who know the field — and the code.</span>
+            <span data-lang="fr">Conçu par des ingénieurs qui connaissent le terrain — et le code.</span>
+            <span data-lang="ar">بُني بواسطة مهندسين يعرفون الحقل والكود على حدّ سواء.</span>
+          </h2>
+        </div>
+        <div class="lg:col-span-7 space-y-5 text-base lg:text-lg leading-relaxed text-leaf-800">
+          <div data-lang="en" class="lang-active space-y-5">
+            <p>Leaf Code was born from a clear observation: agricultural decisions in Algeria — and across the region — are still being made with incomplete data, outdated methods, and tools that were never built for our terrain, our crops, or our constraints.</p>
+            <p>We are a company of engineers, agronomists, and developers who set out to change that. We design and develop precision agriculture solutions from the ground up: custom software, drone systems, IoT infrastructure, AI-powered analysis, and agronomic platforms. We cover field crops, fruit orchards, and livestock — because smart farming has no borders within agriculture.</p>
+            <p class="font-semibold text-leaf-900">We do not resell imported technology. We build it — adapted to local conditions, deployable in real environments, and designed to generate decisions, not just data.</p>
+          </div>
+          <div data-lang="fr" class="space-y-5">
+            <p>Leaf Code est née d'un constat simple : en Algérie — et dans toute la région — les décisions agricoles se prennent encore trop souvent avec des données incomplètes, des méthodes dépassées et des outils qui n'ont pas été conçus pour notre terrain, nos cultures ni nos réalités.</p>
+            <p>Nous sommes une équipe d'ingénieurs, d'agronomes et de développeurs qui ont décidé de changer cela. Nous concevons et développons des solutions d'agriculture de précision de A à Z : logiciels sur mesure, systèmes de drones, infrastructure IoT, analyse par intelligence artificielle et plateformes agronomiques.</p>
+            <p class="font-semibold text-leaf-900">Nous ne revendons pas de technologie importée. Nous la construisons — adaptée aux conditions locales, déployable sur le terrain réel, et conçue pour générer des décisions, pas seulement des données.</p>
+          </div>
+          <div data-lang="ar" class="space-y-5">
+            <p>وُلدت Leaf Code من ملاحظة بسيطة: في الجزائر — وفي المنطقة بأسرها — لا تزال القرارات الزراعية تُتخذ بناءً على بيانات ناقصة، وأساليب متقادمة، وأدوات لم تُصمَّم أصلاً لأراضينا ومحاصيلنا وظروفنا.</p>
+            <p>نحن فريق من المهندسين والزراعيين والمطورين الذين قرروا تغيير ذلك. نصمم ونطور حلول الزراعة الدقيقة من الألف إلى الياء: برمجيات مخصصة، أنظمة طائرات مسيّرة، بنية تحتية IoT، تحليل بالذكاء الاصطناعي، ومنصات زراعية متكاملة. نغطي المحاصيل الكبيرة والبساتين والثروة الحيوانية.</p>
+            <p class="font-semibold text-leaf-900">لا نبيع تكنولوجيا مستوردة. نبنيها — مكيّفة مع الظروف المحلية، قابلة للنشر في البيئات الحقيقية، ومصممة لتوليد القرارات، لا البيانات فحسب.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Stats -->
+      <div class="max-w-7xl mx-auto px-5 lg:px-8 mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 gsap-stagger">
+        <div class="bg-white border border-leaf-100 rounded-2xl p-6 hover:-translate-y-1 hover:shadow-soft transition">
+          <div class="text-3xl font-display font-extrabold text-leaf-700 mb-2 countup" data-count="2024">0</div>
+          <p class="text-sm text-leaf-800 leading-snug">
+            <span data-lang="en" class="lang-active">AgriTech Challenge Winner</span>
+            <span data-lang="fr">Lauréat AgriTech Challenge</span>
+            <span data-lang="ar">الفائز بـ AgriTech Challenge</span>
+          </p>
+        </div>
+        <div class="bg-white border border-leaf-100 rounded-2xl p-6 hover:-translate-y-1 hover:shadow-soft transition">
+          <div class="text-3xl font-display font-extrabold text-leaf-700 mb-2 countup" data-count="2">0</div>
+          <p class="text-sm text-leaf-800 leading-snug">
+            <span data-lang="en" class="lang-active">Drone systems operational</span>
+            <span data-lang="fr">Systèmes de drones opérationnels</span>
+            <span data-lang="ar">نظامان للطائرات المسيّرة قيد التشغيل</span>
+          </p>
+        </div>
+        <div class="bg-white border border-leaf-100 rounded-2xl p-6 hover:-translate-y-1 hover:shadow-soft transition">
+          <div class="text-3xl font-display font-extrabold text-leaf-700 mb-2 countup" data-count="3">0</div>
+          <p class="text-sm text-leaf-800 leading-snug">
+            <span data-lang="en" class="lang-active">Sectors: Crops, Orchards, Livestock</span>
+            <span data-lang="fr">Secteurs : Cultures, Arboriculture, Élevage</span>
+            <span data-lang="ar">قطاعات: محاصيل، بساتين، ثروة حيوانية</span>
+          </p>
+        </div>
+        <div class="bg-white border border-leaf-100 rounded-2xl p-6 hover:-translate-y-1 hover:shadow-soft transition">
+          <div class="text-3xl font-display font-extrabold text-leaf-700 mb-2">DZ</div>
+          <p class="text-sm text-leaf-800 leading-snug">
+            <span data-lang="en" class="lang-active">Built in Algeria, designed for Africa</span>
+            <span data-lang="fr">Construit en Algérie, conçu pour l'Afrique</span>
+            <span data-lang="ar">صُنع في الجزائر، مُصمَّم لإفريقيا</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== SERVICES ====================== -->
+    <section id="services" class="py-24 lg:py-32 bg-white reveal">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="max-w-3xl mb-16">
+          <span class="inline-block text-xs font-bold tracking-widest text-leaf-600 uppercase mb-4">
+            <span data-lang="en" class="lang-active">What we do</span>
+            <span data-lang="fr">Ce que nous faisons</span>
+            <span data-lang="ar">ما نقوم به</span>
+          </span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight text-leaf-900">
+            <span data-lang="en" class="lang-active">End-to-end AgriTech. From concept to field.</span>
+            <span data-lang="fr">AgriTech de bout en bout. Du concept au terrain.</span>
+            <span data-lang="ar">تقنية زراعية شاملة. من الفكرة إلى الحقل.</span>
+          </h2>
+          <p class="mt-5 text-lg text-leaf-800 leading-relaxed">
+            <span data-lang="en" class="lang-active">Whether you need a ready-to-deploy solution or something built from scratch for your specific operation — we cover the full spectrum. Six service areas, one team, zero compromise on precision.</span>
+            <span data-lang="fr">Que vous ayez besoin d'une solution prête à déployer ou d'un développement entièrement sur mesure — nous couvrons toute la chaîne. Six domaines de service, une équipe, zéro compromis sur la précision.</span>
+            <span data-lang="ar">سواء احتجت إلى حل جاهز للنشر أو تطوير مخصص لعمليتك المحددة — نحن نغطي السلسلة بأكملها. ستة مجالات خدمة، فريق واحد، ولا تنازل عن الدقة.</span>
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 gsap-stagger">
+
+          <!-- Service 1 -->
+          <article data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.1" class="service-card group bg-sand-50 border border-leaf-100 rounded-2xl p-7 hover:border-leaf-300 hover:shadow-soft transition">
+            <div class="service-icon w-12 h-12 rounded-xl bg-leaf-700 text-white grid place-items-center mb-5">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-xl text-leaf-900 mb-3">
+              <span data-lang="en" class="lang-active">Custom AgriTech Development</span>
+              <span data-lang="fr">Développement AgriTech sur mesure</span>
+              <span data-lang="ar">تطوير حلول زراعية مخصصة</span>
+            </h3>
+            <p class="text-sm text-leaf-800 leading-relaxed">
+              <span data-lang="en" class="lang-active"><strong>We build what doesn't exist yet.</strong> Tailored web and mobile apps, embedded systems and connected infrastructure — engineered from the ground up for field crops, orchards, livestock, and agro-industrial operations.</span>
+              <span data-lang="fr"><strong>Nous construisons ce qui n'existe pas encore.</strong> Applications web et mobile, systèmes embarqués et infrastructures connectées — pensés sur mesure pour grandes cultures, arboriculture, élevage et opérations agro-industrielles.</span>
+              <span data-lang="ar"><strong>نبني ما لا يوجد بعد.</strong> تطبيقات ويب وموبايل، أنظمة مدمجة وبنى تحتية متصلة — مهندسة من الصفر للمحاصيل الكبيرة والبساتين والثروة الحيوانية والعمليات الزراعية الصناعية.</span>
+            </p>
+          </article>
+
+          <!-- Service 2 -->
+          <article data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.1" class="service-card group bg-sand-50 border border-leaf-100 rounded-2xl p-7 hover:border-leaf-300 hover:shadow-soft transition">
+            <div class="service-icon w-12 h-12 rounded-xl bg-leaf-700 text-white grid place-items-center mb-5">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-xl text-leaf-900 mb-3">
+              <span data-lang="en" class="lang-active">Precision Agriculture &amp; IoT</span>
+              <span data-lang="fr">Agriculture de précision &amp; IoT</span>
+              <span data-lang="ar">الزراعة الدقيقة وإنترنت الأشياء</span>
+            </h3>
+            <p class="text-sm text-leaf-800 leading-relaxed">
+              <span data-lang="en" class="lang-active"><strong>Real data from real fields, in real time.</strong> IoT infrastructure for soil moisture, irrigation, microclimate and crop health. For livestock: behavior sensors, feeding automation, herd health — all in one dashboard.</span>
+              <span data-lang="fr"><strong>Données réelles du terrain, en temps réel.</strong> Infrastructures IoT pour l'humidité du sol, l'irrigation, le microclimat et la santé des cultures. Pour l'élevage : capteurs comportementaux, automatisation et suivi sanitaire — tout dans un tableau de bord.</span>
+              <span data-lang="ar"><strong>بيانات حقيقية من الحقول، في الوقت الفعلي.</strong> بنى IoT لرطوبة التربة والري والمناخ المحلي وصحة المحاصيل. للتربية: أجهزة استشعار سلوكية، أتمتة التغذية، ومراقبة صحة القطيع — كل ذلك في لوحة قيادة واحدة.</span>
+            </p>
+          </article>
+
+          <!-- Service 3 -->
+          <article data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.1" class="service-card group bg-sand-50 border border-leaf-100 rounded-2xl p-7 hover:border-leaf-300 hover:shadow-soft transition">
+            <div class="service-icon w-12 h-12 rounded-xl bg-leaf-700 text-white grid place-items-center mb-5">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-xl text-leaf-900 mb-3">
+              <span data-lang="en" class="lang-active">Agricultural Drone Systems</span>
+              <span data-lang="fr">Systèmes de drones agricoles</span>
+              <span data-lang="ar">أنظمة الطائرات المسيّرة الزراعية</span>
+            </h3>
+            <p class="text-sm text-leaf-800 leading-relaxed">
+              <span data-lang="en" class="lang-active"><strong>Eyes above the field. Intelligence below.</strong> Purpose-built aerial systems — multispectral mapping, disease detection, targeted pesticide application and biomass estimation. DGACM Class II compliant.</span>
+              <span data-lang="fr"><strong>Des yeux au-dessus du champ. De l'intelligence en dessous.</strong> Systèmes aériens conçus sur mesure — cartographie multispectrale, détection de maladies, traitement ciblé et estimation de biomasse. Conformes DGACM Classe II.</span>
+              <span data-lang="ar"><strong>عيون فوق الحقل. ذكاء تحته.</strong> أنظمة جوية مصممة خصيصاً — رسم خرائط متعدد الأطياف، كشف الأمراض، تطبيق المبيدات بدقة وتقدير الكتلة الحيوية. متوافقة مع DGACM فئة ثانية.</span>
+            </p>
+          </article>
+
+          <!-- Service 4 -->
+          <article data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.1" class="service-card group bg-sand-50 border border-leaf-100 rounded-2xl p-7 hover:border-leaf-300 hover:shadow-soft transition">
+            <div class="service-icon w-12 h-12 rounded-xl bg-leaf-700 text-white grid place-items-center mb-5">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-xl text-leaf-900 mb-3">
+              <span data-lang="en" class="lang-active">Rapid Prototyping &amp; 3D Design</span>
+              <span data-lang="fr">Prototypage rapide &amp; design 3D</span>
+              <span data-lang="ar">النمذجة السريعة والتصميم ثلاثي الأبعاد</span>
+            </h3>
+            <p class="text-sm text-leaf-800 leading-relaxed">
+              <span data-lang="en" class="lang-active"><strong>From idea to prototype. Fast.</strong> 3D mechanical design, drone frame conception, IoT enclosures, and 3D-printed custom agricultural equipment — without cutting corners on engineering quality.</span>
+              <span data-lang="fr"><strong>De l'idée au prototype. Rapidement.</strong> Conception mécanique 3D, châssis de drones, boîtiers IoT et impression 3D d'équipements agricoles sur mesure — sans compromis sur la qualité d'ingénierie.</span>
+              <span data-lang="ar"><strong>من الفكرة إلى النموذج الأولي. بسرعة.</strong> تصميم ميكانيكي ثلاثي الأبعاد، هياكل طائرات مسيّرة، علب IoT وطباعة ثلاثية الأبعاد لمعدات زراعية مخصصة — دون تنازل عن جودة الهندسة.</span>
+            </p>
+          </article>
+
+          <!-- Service 5 -->
+          <article data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.1" class="service-card group bg-sand-50 border border-leaf-100 rounded-2xl p-7 hover:border-leaf-300 hover:shadow-soft transition">
+            <div class="service-icon w-12 h-12 rounded-xl bg-leaf-700 text-white grid place-items-center mb-5">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h20M3 3v18l9-4 9 4V3"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-xl text-leaf-900 mb-3">
+              <span data-lang="en" class="lang-active">Agricultural Consulting</span>
+              <span data-lang="fr">Conseil agronomique</span>
+              <span data-lang="ar">الاستشارات الزراعية</span>
+            </h3>
+            <p class="text-sm text-leaf-800 leading-relaxed">
+              <span data-lang="en" class="lang-active"><strong>Technology is only as good as the strategy behind it.</strong> Our agronomy engineers assess your practices, find the highest-impact opportunities for data and automation, and design a step-by-step adoption roadmap.</span>
+              <span data-lang="fr"><strong>La technologie ne vaut que par la stratégie qui la porte.</strong> Nos ingénieurs agronomes évaluent vos pratiques, identifient les leviers à plus fort impact et conçoivent une feuille de route d'adoption.</span>
+              <span data-lang="ar"><strong>التكنولوجيا لا تساوي شيئاً بدون استراتيجية واضحة خلفها.</strong> يقيّم مهندسونا ممارساتك ويحددون أعلى الفرص أثراً ويصممون خارطة طريق تنفيذية خطوة بخطوة.</span>
+            </p>
+          </article>
+
+          <!-- Service 6 -->
+          <article data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.1" class="service-card group bg-sand-50 border border-leaf-100 rounded-2xl p-7 hover:border-leaf-300 hover:shadow-soft transition">
+            <div class="service-icon w-12 h-12 rounded-xl bg-leaf-700 text-white grid place-items-center mb-5">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-xl text-leaf-900 mb-3">
+              <span data-lang="en" class="lang-active">Training &amp; Skills Transfer</span>
+              <span data-lang="fr">Formation &amp; transfert de compétences</span>
+              <span data-lang="ar">التدريب ونقل المهارات</span>
+            </h3>
+            <p class="text-sm text-leaf-800 leading-relaxed">
+              <span data-lang="en" class="lang-active"><strong>Tools only work if people know how to use them.</strong> Practical training in precision agriculture, drone operation, X-Crop platform use, IoT management and data-driven decisions — in Arabic, French or English.</span>
+              <span data-lang="fr"><strong>Les outils ne fonctionnent que si les gens savent s'en servir.</strong> Formations pratiques : agriculture de précision, pilotage de drones, plateforme X-Crop, systèmes IoT et lecture des données — en arabe, français ou anglais.</span>
+              <span data-lang="ar"><strong>الأدوات لا تعمل إلا إذا عرف الناس كيف يستخدمونها.</strong> برامج تدريب عملية: الزراعة الدقيقة، تشغيل الطائرات المسيّرة، منصة X-Crop، إدارة IoT وقراءة البيانات — بالعربية والفرنسية والإنجليزية.</span>
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== TECH MARQUEE ====================== -->
+    <section class="py-12 bg-leaf-900 text-leaf-200/90 overflow-hidden border-y border-leaf-800">
+      <p class="text-center text-xs uppercase tracking-[0.3em] text-leaf-300/70 mb-6 font-semibold">
+        <span data-lang="en" class="lang-active">Powered by a modern AgriTech stack</span>
+        <span data-lang="fr">Propulsé par une stack AgriTech moderne</span>
+        <span data-lang="ar">مدعوم بتقنيات زراعية حديثة</span>
+      </p>
+      <div class="relative">
+        <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-leaf-900 to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-leaf-900 to-transparent z-10 pointer-events-none"></div>
+        <div class="marquee text-xl font-display font-semibold">
+          <!-- First copy -->
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> YOLOv8</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> PyTorch</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> OpenCV</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> React Native</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> OVHcloud</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> IoT Sensors</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> Multispectral</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> DGACM Class II</span>
+          <!-- Duplicate copy for seamless loop -->
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> YOLOv8</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> PyTorch</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> OpenCV</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> React Native</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> OVHcloud</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> IoT Sensors</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> Multispectral</span>
+          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> DGACM Class II</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== PRODUCTS ====================== -->
+    <section id="products" class="py-24 lg:py-32 bg-leaf-950 text-white reveal relative overflow-hidden">
+      <div class="topo absolute inset-0 opacity-30 pointer-events-none"></div>
+      <div class="max-w-7xl mx-auto px-5 lg:px-8 relative">
+        <div class="max-w-3xl mb-16">
+          <span class="inline-block text-xs font-bold tracking-widest text-leaf-300 uppercase mb-4">
+            <span data-lang="en" class="lang-active">Products</span>
+            <span data-lang="fr">Produits</span>
+            <span data-lang="ar">المنتجات</span>
+          </span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight">
+            <span data-lang="en" class="lang-active">Built by us. Proven in the field.</span>
+            <span data-lang="fr">Conçus par nous. Prouvés sur le terrain.</span>
+            <span data-lang="ar">بنيناها. اختبرناها في الحقل.</span>
+          </h2>
+          <p class="mt-5 text-lg text-leaf-100/85 leading-relaxed">
+            <span data-lang="en" class="lang-active">Two products. Two different problems. One coherent mission: give agricultural operations the tools they need to make better decisions, faster.</span>
+            <span data-lang="fr">Deux produits. Deux problèmes différents. Une mission cohérente : donner aux exploitations les outils pour décider mieux et plus vite.</span>
+            <span data-lang="ar">منتجان. مشكلتان مختلفتان. مهمة واحدة متماسكة: تزويد العمليات الزراعية بالأدوات التي تحتاجها لاتخاذ قرارات أفضل وأسرع.</span>
+          </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-6 gsap-stagger">
+
+          <!-- AIRCROP -->
+          <div data-tilt data-tilt-max="4" data-tilt-glare data-tilt-max-glare="0.15" class="bg-leaf-900/80 border border-leaf-700/50 rounded-3xl p-8 lg:p-10">
+            <div class="flex items-center justify-between mb-6">
+              <span class="text-xs tracking-widest font-bold text-leaf-300">PRODUCT 01</span>
+              <span class="text-xs px-3 py-1 rounded-full bg-leaf-700/50 border border-leaf-600/40">Drone · AI · Precision</span>
+            </div>
+            <h3 class="font-display font-extrabold text-4xl lg:text-5xl mb-2 tracking-tight">AIRCROP</h3>
+            <p class="text-leaf-300 mb-6 text-sm font-medium">
+              <span data-lang="en" class="lang-active">Agricultural intelligence from above.</span>
+              <span data-lang="fr">L'intelligence agricole vue du ciel.</span>
+              <span data-lang="ar">الذكاء الزراعي من الجو.</span>
+            </p>
+
+            <p class="text-leaf-100/90 leading-relaxed mb-6">
+              <span data-lang="en" class="lang-active">A complete agricultural drone system designed, built, and operated by Leaf Code — not a re-skinned consumer drone, but a purpose-engineered two-drone system: one for mapping and scouting, one for precision treatment. Onboard AI, dedicated mobile app, DGACM Class II compliant.</span>
+              <span data-lang="fr">Un système de drones agricoles complet, conçu, fabriqué et opéré par Leaf Code — pas un drone grand public ré-habillé, mais un système bi-drone conçu sur mesure : un pour la cartographie et le scouting, un pour le traitement de précision. IA embarquée, app mobile dédiée, conforme DGACM Classe II.</span>
+              <span data-lang="ar">نظام طائرات مسيّرة زراعي متكامل، صمّمه وبناه وشغّله فريق Leaf Code — ليس طائرة تجارية بمظهر مختلف، بل نظام مكوّن من طائرتين: واحدة لرسم الخرائط والاستطلاع، وأخرى للمعالجة الدقيقة. ذكاء اصطناعي متكامل، تطبيق موبايل مخصص، متوافق مع DGACM فئة ثانية.</span>
+            </p>
+
+            <ul class="bullet-list space-y-2.5 text-sm text-leaf-100/90 mb-6">
+              <li class="flex items-start gap-2.5"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-leaf-300 flex-shrink-0"></span><span data-lang="en" class="lang-active">Multispectral aerial mapping</span><span data-lang="fr">Cartographie aérienne multispectrale</span><span data-lang="ar">رسم خرائط جوية متعددة الأطياف</span></li>
+              <li class="flex items-start gap-2.5"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-leaf-300 flex-shrink-0"></span><span data-lang="en" class="lang-active">AI disease &amp; stress detection (YOLOv8, PyTorch)</span><span data-lang="fr">Détection de maladies par IA (YOLOv8, PyTorch)</span><span data-lang="ar">كشف الأمراض والإجهاد بالذكاء الاصطناعي</span></li>
+              <li class="flex items-start gap-2.5"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-leaf-300 flex-shrink-0"></span><span data-lang="en" class="lang-active">Near-real-time field health reports</span><span data-lang="fr">Rapports de santé parcellaire en quasi-temps réel</span><span data-lang="ar">تقارير صحة الحقل شبه الفورية</span></li>
+              <li class="flex items-start gap-2.5"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-leaf-300 flex-shrink-0"></span><span data-lang="en" class="lang-active">Targeted pesticide application</span><span data-lang="fr">Application de pesticides ciblée</span><span data-lang="ar">تطبيق المبيدات بدقة</span></li>
+              <li class="flex items-start gap-2.5"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-leaf-300 flex-shrink-0"></span><span data-lang="en" class="lang-active">Biomass &amp; yield estimation</span><span data-lang="fr">Estimation de biomasse &amp; rendement</span><span data-lang="ar">تقدير الكتلة الحيوية والإنتاج</span></li>
+            </ul>
+          </div>
+
+          <!-- X-CROP -->
+          <div data-tilt data-tilt-max="4" data-tilt-glare data-tilt-max-glare="0.15" class="bg-leaf-900/80 border border-leaf-700/50 rounded-3xl p-8 lg:p-10">
+            <div class="flex items-center justify-between mb-6">
+              <span class="text-xs tracking-widest font-bold text-leaf-300">PRODUCT 02</span>
+              <span class="text-xs px-3 py-1 rounded-full bg-leaf-700/50 border border-leaf-600/40">Web · Mobile · Platform</span>
+            </div>
+            <h3 class="font-display font-extrabold text-4xl lg:text-5xl mb-2 tracking-tight">X-Crop</h3>
+            <p class="text-leaf-300 mb-6 text-sm font-medium">
+              <span data-lang="en" class="lang-active">The agronomist's operating system.</span>
+              <span data-lang="fr">Le système d'exploitation de l'agronome.</span>
+              <span data-lang="ar">نظام تشغيل الزراعي.</span>
+            </p>
+
+            <p class="text-leaf-100/90 leading-relaxed mb-6">
+              <span data-lang="en" class="lang-active">A precision agriculture management platform for agronomists, field technicians, and farm managers. Centralizes crop monitoring, phytosanitary diagnostics, treatment recommendations, and agronomic knowledge — accessible from any device, in the field or at the office.</span>
+              <span data-lang="fr">Une plateforme de gestion en agriculture de précision pour agronomes, techniciens et gestionnaires. Centralise suivi des cultures, diagnostic phytosanitaire, recommandations de traitement et connaissances agronomiques — sur tous les appareils.</span>
+              <span data-lang="ar">منصة إدارة زراعة دقيقة مصمَّمة للزراعيين والتقنيين الميدانيين ومديري المزارع. تُركّز مراقبة المحاصيل والتشخيص الوقائي وتوصيات العلاج والمعرفة الزراعية — في متناول أي جهاز.</span>
+            </p>
+
+            <div class="grid grid-cols-2 gap-3 text-sm">
+              <div class="bg-leaf-800/60 rounded-xl p-3">
+                <div class="font-semibold text-leaf-200">
+                  <span data-lang="en" class="lang-active">Cultures</span><span data-lang="fr">Cultures</span><span data-lang="ar">المحاصيل</span>
+                </div>
+                <p class="text-xs text-leaf-100/70 mt-1 leading-snug">
+                  <span data-lang="en" class="lang-active">Plot management, phenology, history</span>
+                  <span data-lang="fr">Parcelles, phénologie, historique</span>
+                  <span data-lang="ar">إدارة القطع، التطور، التاريخ</span>
+                </p>
+              </div>
+              <div class="bg-leaf-800/60 rounded-xl p-3">
+                <div class="font-semibold text-leaf-200">
+                  <span data-lang="en" class="lang-active">Crop Health</span><span data-lang="fr">Santé des cultures</span><span data-lang="ar">صحة المحاصيل</span>
+                </div>
+                <p class="text-xs text-leaf-100/70 mt-1 leading-snug">
+                  <span data-lang="en" class="lang-active">Diagnosis, alerts, stress indicators</span>
+                  <span data-lang="fr">Diagnostic, alertes, indicateurs</span>
+                  <span data-lang="ar">التشخيص والتنبيهات</span>
+                </p>
+              </div>
+              <div class="bg-leaf-800/60 rounded-xl p-3">
+                <div class="font-semibold text-leaf-200">
+                  <span data-lang="en" class="lang-active">Phytosanitary</span><span data-lang="fr">Phytosanitaire</span><span data-lang="ar">الحلول الوقائية</span>
+                </div>
+                <p class="text-xs text-leaf-100/70 mt-1 leading-snug">
+                  <span data-lang="en" class="lang-active">Data-driven treatment plans</span>
+                  <span data-lang="fr">Traitements basés sur la donnée</span>
+                  <span data-lang="ar">توصيات مبنية على البيانات</span>
+                </p>
+              </div>
+              <div class="bg-leaf-800/60 rounded-xl p-3">
+                <div class="font-semibold text-leaf-200">
+                  <span data-lang="en" class="lang-active">Glossary</span><span data-lang="fr">Glossaire</span><span data-lang="ar">القاموس</span>
+                </div>
+                <p class="text-xs text-leaf-100/70 mt-1 leading-snug">
+                  <span data-lang="en" class="lang-active">Diseases, pests, treatments</span>
+                  <span data-lang="fr">Maladies, ravageurs, traitements</span>
+                  <span data-lang="ar">الأمراض، الآفات، العلاجات</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== WHY US ====================== -->
+    <section id="why" class="py-24 lg:py-32 bg-sand-50 reveal">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="max-w-3xl mb-16">
+          <span class="inline-block text-xs font-bold tracking-widest text-leaf-600 uppercase mb-4">
+            <span data-lang="en" class="lang-active">Why Leaf Code</span>
+            <span data-lang="fr">Pourquoi Leaf Code</span>
+            <span data-lang="ar">لماذا Leaf Code</span>
+          </span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight text-leaf-900">
+            <span data-lang="en" class="lang-active">We know agriculture. We build technology. Most companies do only one.</span>
+            <span data-lang="fr">Nous connaissons l'agriculture. Nous construisons la technologie. La plupart des entreprises ne font qu'un seul des deux.</span>
+            <span data-lang="ar">نعرف الزراعة. نبني التكنولوجيا. معظم الشركات تفعل واحداً فقط.</span>
+          </h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5 gsap-stagger">
+          <div data-tilt data-tilt-max="5" class="bg-white border border-leaf-100 rounded-2xl p-7 hover:shadow-soft transition">
+            <div class="text-leaf-600 text-3xl font-display font-extrabold mb-3">01</div>
+            <h3 class="font-display font-bold text-xl text-leaf-900 mb-2">
+              <span data-lang="en" class="lang-active">Engineers who farm</span>
+              <span data-lang="fr">Des ingénieurs qui cultivent</span>
+              <span data-lang="ar">مهندسون يفهمون الحقل</span>
+            </h3>
+            <p class="text-leaf-800 text-sm leading-relaxed">
+              <span data-lang="en" class="lang-active">Our team holds engineering degrees in precision agriculture. We do not translate tech for farmers — we are both.</span>
+              <span data-lang="fr">Notre équipe est diplômée en ingénierie de l'agriculture de précision. Nous ne traduisons pas la technologie pour les agriculteurs — nous sommes les deux.</span>
+              <span data-lang="ar">فريقنا يحمل شهادات هندسية في الزراعة الدقيقة. لا نترجم التكنولوجيا للمزارعين — نحن كلاهما.</span>
+            </p>
+          </div>
+          <div data-tilt data-tilt-max="5" class="bg-white border border-leaf-100 rounded-2xl p-7 hover:shadow-soft transition">
+            <div class="text-leaf-600 text-3xl font-display font-extrabold mb-3">02</div>
+            <h3 class="font-display font-bold text-xl text-leaf-900 mb-2">
+              <span data-lang="en" class="lang-active">Full spectrum coverage</span>
+              <span data-lang="fr">Couverture complète</span>
+              <span data-lang="ar">تغطية شاملة</span>
+            </h3>
+            <p class="text-leaf-800 text-sm leading-relaxed">
+              <span data-lang="en" class="lang-active">Crops. Orchards. Livestock. We design solutions for every major agricultural sector — not just the easiest one.</span>
+              <span data-lang="fr">Grandes cultures. Arboriculture. Élevage. Nous concevons des solutions pour tous les grands secteurs agricoles.</span>
+              <span data-lang="ar">محاصيل. بساتين. ثروة حيوانية. نصمم حلولاً لكل القطاعات الزراعية الرئيسية.</span>
+            </p>
+          </div>
+          <div data-tilt data-tilt-max="5" class="bg-white border border-leaf-100 rounded-2xl p-7 hover:shadow-soft transition">
+            <div class="text-leaf-600 text-3xl font-display font-extrabold mb-3">03</div>
+            <h3 class="font-display font-bold text-xl text-leaf-900 mb-2">
+              <span data-lang="en" class="lang-active">Built in Algeria, for Algeria</span>
+              <span data-lang="fr">Construit en Algérie, pour l'Algérie</span>
+              <span data-lang="ar">صُنع في الجزائر، للجزائر</span>
+            </h3>
+            <p class="text-leaf-800 text-sm leading-relaxed">
+              <span data-lang="en" class="lang-active">We understand local soil types, crop calendars, climatic zones, regulatory frameworks, and what actually works on the ground. No guesswork.</span>
+              <span data-lang="fr">Nous comprenons les sols locaux, les calendriers culturaux, les zones climatiques, le cadre réglementaire — et ce qui fonctionne vraiment sur le terrain.</span>
+              <span data-lang="ar">نفهم أنواع التربة المحلية ودورات المحاصيل والمناطق المناخية والأطر التنظيمية وما يصلح فعلاً على أرض الواقع.</span>
+            </p>
+          </div>
+          <div data-tilt data-tilt-max="5" class="bg-white border border-leaf-100 rounded-2xl p-7 hover:shadow-soft transition">
+            <div class="text-leaf-600 text-3xl font-display font-extrabold mb-3">04</div>
+            <h3 class="font-display font-bold text-xl text-leaf-900 mb-2">
+              <span data-lang="en" class="lang-active">Products AND services</span>
+              <span data-lang="fr">Produits ET services</span>
+              <span data-lang="ar">منتجات وخدمات</span>
+            </h3>
+            <p class="text-leaf-800 text-sm leading-relaxed">
+              <span data-lang="en" class="lang-active">We are not just consultants who recommend — we build and deploy. And we are not just developers who code — we advise and train. You get the full picture.</span>
+              <span data-lang="fr">Nous ne sommes pas que des consultants — nous construisons et déployons. Et pas que des développeurs — nous conseillons et formons. Vous avez l'ensemble.</span>
+              <span data-lang="ar">لسنا مجرد مستشارين — نحن نبني وننشر. ولسنا مجرد مطورين — نحن نستشير وندرّب.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== CTA + CONTACT ====================== -->
+    <section id="contact" class="py-24 lg:py-32 bg-white reveal">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8 grid lg:grid-cols-12 gap-12 items-start">
+        <div class="lg:col-span-5">
+          <span class="inline-block text-xs font-bold tracking-widest text-leaf-600 uppercase mb-4">
+            <span data-lang="en" class="lang-active">Get in Touch</span>
+            <span data-lang="fr">Contactez-nous</span>
+            <span data-lang="ar">تواصل معنا</span>
+          </span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight text-leaf-900">
+            <span data-lang="en" class="lang-active">Your agricultural data deserves better tools.</span>
+            <span data-lang="fr">Vos données agricoles méritent de meilleurs outils.</span>
+            <span data-lang="ar">بياناتك الزراعية تستحق أدوات أفضل.</span>
+          </h2>
+          <p class="mt-5 text-lg text-leaf-800 leading-relaxed">
+            <span data-lang="en" class="lang-active">Whether you have a defined project or just a problem you cannot solve — talk to our team. We respond within 48 hours.</span>
+            <span data-lang="fr">Que vous ayez un projet défini ou simplement un problème que vous n'arrivez pas à résoudre — parlez à notre équipe. Réponse sous 48 heures.</span>
+            <span data-lang="ar">سواء كان لديك مشروع محدد أو مجرد مشكلة لا تجد لها حلاً — تحدث إلى فريقنا. نرد خلال 48 ساعة.</span>
+          </p>
+
+          <div class="mt-8 space-y-4">
+            <div class="flex items-center gap-3 text-sm text-leaf-800">
+              <span class="w-10 h-10 rounded-full bg-leaf-100 text-leaf-700 grid place-items-center flex-shrink-0">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m4 4 8 8 8-8"/></svg>
+              </span>
+              <a href="mailto:contact@leafcode.dz" class="hover:text-leaf-700">contact@leafcode.dz</a>
+            </div>
+            <div class="flex items-center gap-3 text-sm text-leaf-800">
+              <span class="w-10 h-10 rounded-full bg-leaf-100 text-leaf-700 grid place-items-center flex-shrink-0">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </span>
+              <span>
+                <span data-lang="en" class="lang-active">Algiers, Algeria</span>
+                <span data-lang="fr">Alger, Algérie</span>
+                <span data-lang="ar">الجزائر العاصمة، الجزائر</span>
+              </span>
+            </div>
+            <div class="flex items-center gap-3 text-sm text-leaf-800">
+              <span class="w-10 h-10 rounded-full bg-leaf-100 text-leaf-700 grid place-items-center flex-shrink-0">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </span>
+              <span>
+                <span data-lang="en" class="lang-active">We respond within 48 hours</span>
+                <span data-lang="fr">Nous répondons sous 48 heures</span>
+                <span data-lang="ar">نرد خلال 48 ساعة</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Google Form embed slot -->
+        <div class="lg:col-span-7">
+          <div class="bg-sand-50 border border-leaf-100 rounded-3xl p-2 shadow-soft">
+            <!--
+              ============================================================
+              GOOGLE FORM EMBED
+              ------------------------------------------------------------
+              REPLACE the iframe `src` below with your Google Form's
+              embed URL once the form is ready.
+
+              How to get the embed URL:
+                1. Open your Google Form in edit mode.
+                2. Click "Send" (top right) → choose the <> (embed) icon.
+                3. Copy the value of the `src` attribute from the
+                   provided <iframe> snippet — it ends with
+                   "/viewform?embedded=true".
+                4. Paste it below in place of GOOGLE_FORM_EMBED_URL_HERE.
+
+              The placeholder UI below renders while no URL is set.
+              ============================================================
+            -->
+
+            <!-- PLACEHOLDER (visible while no form URL is configured) -->
+            <div id="form-placeholder" class="rounded-2xl bg-white border-2 border-dashed border-leaf-200 p-10 text-center">
+              <div class="w-14 h-14 mx-auto rounded-full bg-leaf-100 text-leaf-700 grid place-items-center mb-5">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6M9 9h2"/></svg>
+              </div>
+              <h3 class="font-display font-bold text-xl text-leaf-900 mb-2">
+                <span data-lang="en" class="lang-active">Contact form coming soon</span>
+                <span data-lang="fr">Formulaire de contact bientôt disponible</span>
+                <span data-lang="ar">نموذج التواصل قريباً</span>
+              </h3>
+              <p class="text-sm text-leaf-800 max-w-md mx-auto leading-relaxed mb-6">
+                <span data-lang="en" class="lang-active">Our Google Form will be embedded here. In the meantime, write to us directly at <a href="mailto:contact@leafcode.dz" class="text-leaf-700 font-semibold underline">contact@leafcode.dz</a>.</span>
+                <span data-lang="fr">Notre formulaire Google sera intégré ici. En attendant, écrivez-nous directement à <a href="mailto:contact@leafcode.dz" class="text-leaf-700 font-semibold underline">contact@leafcode.dz</a>.</span>
+                <span data-lang="ar">سيتم تضمين نموذج Google هنا قريباً. في غضون ذلك، راسلنا مباشرة على <a href="mailto:contact@leafcode.dz" class="text-leaf-700 font-semibold underline">contact@leafcode.dz</a>.</span>
+              </p>
+              <a href="mailto:contact@leafcode.dz" class="inline-flex items-center gap-2 bg-leaf-700 hover:bg-leaf-800 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition">
+                <span data-lang="en" class="lang-active">Send Email</span>
+                <span data-lang="fr">Envoyer un email</span>
+                <span data-lang="ar">إرسال بريد</span>
+              </a>
+            </div>
+
+            <!-- ACTIVE FORM (uncomment + paste your URL) -->
+            <!--
+            <iframe
+              src="GOOGLE_FORM_EMBED_URL_HERE"
+              class="w-full rounded-2xl bg-white"
+              style="height: 900px; border: 0;"
+              loading="lazy">
+              Loading…
+            </iframe>
+            -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== FOOTER ====================== -->
+    <footer class="bg-leaf-950 text-leaf-100 pt-16 pb-10">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8 grid md:grid-cols-12 gap-10">
+        <div class="md:col-span-5">
+          <div class="flex items-center gap-2 mb-4">
+            <svg viewBox="0 0 32 32" class="w-8 h-8 text-leaf-300" fill="currentColor"><path d="M16 2C9 2 3 8 3 16c0 7 5 13 13 14 0-7 4-13 10-15-1-7-5-13-10-13zm0 6c4 0 7 4 7 8s-3 8-7 8c0-5 3-9 7-10-4 1-7 4-7 6V8z"/></svg>
+            <span class="font-display font-bold text-lg tracking-tight text-white">Leaf<span class="text-leaf-300">Code</span></span>
+          </div>
+          <p class="font-display font-semibold text-leaf-200 mb-3">
+            <span data-lang="en" class="lang-active">Better Tools. Better Decisions.</span>
+            <span data-lang="fr">De meilleurs outils. De meilleures décisions.</span>
+            <span data-lang="ar">أدوات أفضل. قرارات أفضل.</span>
+          </p>
+          <p class="text-sm text-leaf-200/80 leading-relaxed max-w-md">
+            <span data-lang="en" class="lang-active">Leaf Code is an Algerian AgriTech company designing and developing precision agriculture and smart farming solutions for crops, orchards, and livestock.</span>
+            <span data-lang="fr">Leaf Code est une entreprise algérienne AgriTech qui conçoit et développe des solutions d'agriculture de précision et de smart farming.</span>
+            <span data-lang="ar">Leaf Code شركة جزائرية متخصصة في تقنيات الزراعة، تصمم وتطور حلول الزراعة الدقيقة والزراعة الذكية.</span>
+          </p>
+        </div>
+
+        <div class="md:col-span-3">
+          <h4 class="text-xs uppercase tracking-widest text-leaf-300 font-bold mb-4">
+            <span data-lang="en" class="lang-active">Explore</span>
+            <span data-lang="fr">Explorer</span>
+            <span data-lang="ar">استكشف</span>
+          </h4>
+          <ul class="space-y-2 text-sm text-leaf-100/85">
+            <li><a href="#services" class="hover:text-white">Services</a></li>
+            <li><a href="#products" class="hover:text-white">Products</a></li>
+            <li><a href="#products" class="hover:text-white">AIRCROP</a></li>
+            <li><a href="#products" class="hover:text-white">X-Crop</a></li>
+            <li><a href="#about" class="hover:text-white">About</a></li>
+            <li><a href="#contact" class="hover:text-white">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-4">
+          <h4 class="text-xs uppercase tracking-widest text-leaf-300 font-bold mb-4">
+            <span data-lang="en" class="lang-active">Company</span>
+            <span data-lang="fr">Société</span>
+            <span data-lang="ar">الشركة</span>
+          </h4>
+          <p class="text-sm text-leaf-100/85 mb-2">Leaf Code SPAS</p>
+          <p class="text-sm text-leaf-100/70 mb-1">RC 26 B 1205558</p>
+          <p class="text-sm text-leaf-100/70 mb-4">
+            <span data-lang="en" class="lang-active">Algeria</span>
+            <span data-lang="fr">Algérie</span>
+            <span data-lang="ar">الجزائر</span>
+          </p>
+          <a href="mailto:contact@leafcode.dz" class="text-sm text-leaf-300 hover:text-leaf-200 underline">contact@leafcode.dz</a>
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-5 lg:px-8 mt-12 pt-6 border-t border-leaf-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-leaf-200/70">
+        <p>© 2025 Leaf Code SPAS. <span data-lang="en" class="lang-active">All rights reserved.</span><span data-lang="fr">Tous droits réservés.</span><span data-lang="ar">جميع الحقوق محفوظة.</span></p>
+        <p>EN · FR · AR</p>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ====================== SCRIPTS ====================== -->
+  <script>
+    // ============ Language switcher (EN / FR / AR with RTL) ============
+    const SUPPORTED_LANGS = ['en', 'fr', 'ar'];
+
+    function setLang(lang) {
+      if (!SUPPORTED_LANGS.includes(lang)) lang = 'en';
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.classList.toggle('lang-active', el.getAttribute('data-lang') === lang);
+      });
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.setAttribute('aria-pressed', btn.getAttribute('data-set-lang') === lang ? 'true' : 'false');
+      });
+      document.querySelectorAll('.rtl-flip').forEach(svg => {
+        svg.style.transform = (lang === 'ar') ? 'scaleX(-1)' : 'scaleX(1)';
+      });
+      // Restart headline rotator for new language
+      if (window.__startRotator) window.__startRotator();
+      try { localStorage.setItem('lc_lang', lang); } catch (e) {}
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => setLang(btn.getAttribute('data-set-lang')));
+    });
+
+    (function initLang() {
+      let saved = null;
+      try { saved = localStorage.getItem('lc_lang'); } catch (e) {}
+      if (saved && SUPPORTED_LANGS.includes(saved)) return setLang(saved);
+      const nav = (navigator.language || 'en').toLowerCase();
+      if (nav.startsWith('fr')) return setLang('fr');
+      if (nav.startsWith('ar')) return setLang('ar');
+      setLang('en');
+    })();
+
+    // ============ Mobile menu ============
+    const toggle = document.getElementById('mobile-toggle');
+    const menu = document.getElementById('mobile-menu');
+    toggle?.addEventListener('click', () => menu.classList.toggle('hidden'));
+    menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.add('hidden')));
+
+    // ============ Hero pseudo-heatmap (with live, smooth updates) ============
+    (function makeHeatmap() {
+      const el = document.getElementById('heatmap');
+      if (!el) return;
+      const palette = ['#1d442a', '#255735', '#2e6e3f', '#3f8a51', '#5fa66e', '#8cc398', '#b9dcc1'];
+      const cells = [];
+      // Build cells once
+      for (let i = 0; i < 72; i++) {
+        const d = document.createElement('div');
+        d.className = 'h-3 rounded-sm';
+        d.style.transition = 'background-color .9s ease, opacity .9s ease';
+        el.appendChild(d);
+        cells.push(d);
+      }
+      function paint() {
+        cells.forEach(d => {
+          const center = (Math.random() < 0.18) ? Math.floor(Math.random() * 3) : 3 + Math.floor(Math.random() * 4);
+          d.style.backgroundColor = palette[center];
+          d.style.opacity = (0.55 + Math.random() * 0.45).toFixed(2);
+        });
+      }
+      paint();
+      setInterval(paint, 3500); // gently refresh — feels "live"
+    })();
+
+    // ============ Cursor glow on hero ============
+    (function cursorGlow() {
+      const hero = document.getElementById('hero');
+      const glow = document.getElementById('cursor-glow');
+      if (!hero || !glow) return;
+      hero.addEventListener('mousemove', (e) => {
+        const r = hero.getBoundingClientRect();
+        glow.style.left = (e.clientX - r.left) + 'px';
+        glow.style.top  = (e.clientY - r.top) + 'px';
+        glow.style.opacity = 1;
+      });
+      hero.addEventListener('mouseleave', () => glow.style.opacity = 0);
+    })();
+
+    // ============ Headline word rotator ============
+    let rotatorTimer = null;
+    function startRotator() {
+      if (rotatorTimer) clearInterval(rotatorTimer);
+      // Find active rotator for current language
+      const activeLangSpan = document.querySelector('[data-lang].lang-active .rotator');
+      if (!activeLangSpan) return;
+      const lang = document.documentElement.lang || 'en';
+      const attr = `data-rotate-${lang}`;
+      let words = [];
+      try { words = JSON.parse(activeLangSpan.getAttribute(attr) || '[]'); } catch (e) {}
+      if (!words.length) return;
+
+      // Rebuild children once
+      activeLangSpan.innerHTML = words.map((w, i) => `<span class="${i === 0 ? 'active' : ''}">${w}</span>`).join('');
+      const spans = activeLangSpan.querySelectorAll('span');
+      let i = 0;
+      rotatorTimer = setInterval(() => {
+        spans[i].classList.remove('active');
+        i = (i + 1) % spans.length;
+        spans[i].classList.add('active');
+      }, 2200);
+    }
+    window.__startRotator = startRotator;
+    document.addEventListener('DOMContentLoaded', startRotator);
+
+    // ============ Active section nav highlight ============
+    (function navSpy() {
+      const links = document.querySelectorAll('.nav-link');
+      const sections = Array.from(links).map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const id = '#' + e.target.id;
+            links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === id));
+          }
+        });
+      }, { rootMargin: '-40% 0px -55% 0px' });
+      sections.forEach(s => obs.observe(s));
+    })();
+
+    // ============ Safety: always reveal content if GSAP didn't load ============
+    function forceReveal() {
+      document.querySelectorAll('.gsap-reveal, .gsap-stagger > *, .reveal, .trust-card').forEach(el => { el.style.opacity = '1'; });
+    }
+    // If GSAP isn't there 1.5s after DOM ready, force reveal.
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => { if (!window.gsap) forceReveal(); }, 1500);
+    });
+
+    // ============ All library-driven effects (Lenis, GSAP, CountUp, vanilla-tilt) ============
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // ---- Lenis smooth scroll ----
+      if (window.Lenis) {
+        const lenis = new Lenis({
+          duration: 1.1,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+          smoothTouch: false,
+        });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // Anchor links go through Lenis for buttery scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+          a.addEventListener('click', (e) => {
+            const target = document.querySelector(a.getAttribute('href'));
+            if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -70 }); }
+          });
+        });
+      }
+
+      // ---- GSAP + ScrollTrigger ----
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero on-load entrance — first unhide the parents, then stagger children
+        gsap.set('#hero .gsap-reveal', { opacity: 1 });
+        const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        heroTl
+          .fromTo('#hero .gsap-reveal:first-child > *',
+                  { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .9, stagger: .08 })
+          .fromTo('#hero .gsap-reveal:nth-child(2)',
+                  { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0 }, '-=.7')
+          .fromTo('.trust-card',
+                  { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: .6, stagger: .1, ease: 'back.out(1.4)' }, '-=.4');
+
+        // Generic section reveals
+        gsap.utils.toArray('.reveal').forEach(section => {
+          gsap.fromTo(section,
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: .9, ease: 'power3.out',
+              scrollTrigger: { trigger: section, start: 'top 80%' } }
+          );
+        });
+
+        // Staggered grids
+        gsap.utils.toArray('.gsap-stagger').forEach(grid => {
+          gsap.fromTo(grid.children,
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: .7, ease: 'power2.out', stagger: .08,
+              scrollTrigger: { trigger: grid, start: 'top 85%' } }
+          );
+        });
+
+        // Parallax on hero dashboard
+        gsap.to('#hero .gsap-reveal:nth-child(2)', {
+          scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
+          y: -60,
+        });
+
+        // Animate the drone along its path
+        const path = document.querySelector('.drone-path');
+        const drone = document.getElementById('drone-sprite');
+        if (path && drone && path.getTotalLength) {
+          const len = path.getTotalLength();
+          gsap.to({ p: 0 }, {
+            p: 1, duration: 6, repeat: -1, yoyo: true, ease: 'sine.inOut',
+            onUpdate: function () {
+              const t = this.targets()[0].p;
+              const pt = path.getPointAtLength(t * len);
+              drone.setAttribute('transform', `translate(${pt.x}, ${pt.y})`);
+            }
+          });
+        }
+      }
+
+      // ---- CountUp on stats ----
+      if (window.countUp) {
+        const CountUp = countUp.CountUp;
+        document.querySelectorAll('.countup').forEach(el => {
+          const target = parseFloat(el.getAttribute('data-count'));
+          const cu = new CountUp(el, target, { duration: 2.0, useGrouping: false });
+          const trigger = () => {
+            if (!cu.error && el.getBoundingClientRect().top < window.innerHeight) {
+              cu.start();
+              io.unobserve(el);
+            }
+          };
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting && !cu.error) { cu.start(); io.unobserve(el); } });
+          }, { threshold: 0.4 });
+          io.observe(el);
+        });
+      }
+
+      // ---- vanilla-tilt cards (skip on touch/small screens) ----
+      if (window.VanillaTilt && window.matchMedia('(hover: hover) and (min-width: 768px)').matches) {
+        VanillaTilt.init(document.querySelectorAll('[data-tilt]'), {
+          speed: 600,
+          glare: true,
+          'max-glare': 0.1,
+          gyroscope: false,
+        });
+      }
+    });
+  </script>
+</body>
+</html>
