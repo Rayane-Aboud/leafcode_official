@@ -324,7 +324,7 @@
                 <span class="text-leaf-300">Better Decisions.</span>
               </span>
               <span data-lang="fr">
-                De meilleurs <span class="rotator text-leaf-300" data-rotate-fr='["outils.","drones.","données.","décisions."]'><span class="active">outils.</span></span><br/>
+                De meilleurs <span class="rotator text-leaf-300" data-rotate-fr='["outils.","drones.","données."]'><span class="active">outils.</span></span><br/>
                 <span class="text-leaf-300">De meilleures décisions.</span>
               </span>
               <span data-lang="ar">
@@ -422,7 +422,7 @@
         </div>
 
         <!-- Trust bar -->
-        <div class="mt-16 lg:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="mt-16 lg:mt-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
 
           <!-- Card 1 — Trophy -->
           <div class="trust-card group relative overflow-hidden flex items-center gap-3.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-leaf-400/40 rounded-2xl p-4 transition-all duration-300 cursor-default backdrop-blur">
@@ -531,6 +531,31 @@
               </div>
             </div>
           </div>
+
+          <!-- Card 5 — CBS (institutional partner) -->
+          <a href="https://www.cbs.dz/" target="_blank" rel="noopener"
+             class="trust-card group relative overflow-hidden flex items-center gap-3.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-leaf-400/40 rounded-2xl p-4 transition-all duration-300 backdrop-blur col-span-2 md:col-span-1 no-underline"
+             aria-label="CBS — Official Partner (opens cbs.dz in a new tab)">
+            <div class="absolute -top-12 -right-12 w-24 h-24 rounded-full bg-teal-400/0 group-hover:bg-teal-400/20 blur-2xl transition-all duration-500"></div>
+            <div class="trust-icon relative w-11 h-11 rounded-xl bg-gradient-to-br from-teal-400/25 to-teal-700/10 border border-teal-300/30 grid place-items-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+              <!-- Institution / building icon -->
+              <svg class="w-5 h-5 text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21h18"/>
+                <path d="M5 21V8l7-4 7 4v13"/>
+                <path d="M9 9h.01M12 9h.01M15 9h.01M9 13h.01M12 13h.01M15 13h.01M9 17h.01M15 17h.01"/>
+                <path d="M11 21v-4h2v4"/>
+              </svg>
+              <span class="absolute inset-0 rounded-xl ring-2 ring-teal-300/0 group-hover:ring-teal-300/40 transition-all"></span>
+            </div>
+            <div class="text-xs leading-snug">
+              <div class="font-bold text-white text-sm">CBS</div>
+              <div class="text-leaf-200/80 mt-0.5">
+                <span data-lang="en" class="lang-active">Official Partner</span>
+                <span data-lang="fr">Partenaire officiel</span>
+                <span data-lang="ar">شريك رسمي</span>
+              </div>
+            </div>
+          </a>
 
         </div>
       </div>
@@ -752,7 +777,6 @@
           <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> PyTorch</span>
           <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> OpenCV</span>
           <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> React Native</span>
-          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> OVHcloud</span>
           <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> IoT Sensors</span>
           <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> Multispectral</span>
           <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> DGACM Class II</span>
@@ -761,7 +785,6 @@
           <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> PyTorch</span>
           <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> OpenCV</span>
           <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> React Native</span>
-          <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> OVHcloud</span>
           <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> IoT Sensors</span>
           <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> Multispectral</span>
           <span class="flex items-center gap-3"><span class="text-leaf-400">⬢</span> DGACM Class II</span>
@@ -1008,62 +1031,97 @@
               </span>
             </div>
           </div>
+
+          <!-- QR code card — opens the contact form on mobile -->
+          <div class="mt-10 rounded-2xl bg-leaf-50 border border-leaf-100 p-5 flex items-center gap-5">
+            <div class="flex-shrink-0">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSfsxAfzf6Uk09MemHUfU7NFVbNJm8b6W1-FJfvW7iRIVITeEw/viewform?usp=dialog"
+                 target="_blank" rel="noopener"
+                 class="block bg-white p-2.5 rounded-xl shadow-sm hover:shadow-md transition"
+                 aria-label="Open the Leaf Code contact form (also encoded in this QR)">
+                <img src="assets/qr.png"
+                     alt="QR code linking to the Leaf Code contact form"
+                     width="160" height="160"
+                     class="block w-[160px] h-[160px]"
+                     loading="lazy"
+                     decoding="async" />
+              </a>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-[11px] font-bold tracking-widest text-leaf-600 uppercase mb-1">
+                <span data-lang="en" class="lang-active">Mobile</span>
+                <span data-lang="fr">Mobile</span>
+                <span data-lang="ar">الهاتف</span>
+              </p>
+              <h4 class="font-display font-semibold text-leaf-900 text-base leading-snug mb-1.5">
+                <span data-lang="en" class="lang-active">Scan to open the form on your phone</span>
+                <span data-lang="fr">Scannez pour ouvrir le formulaire sur votre téléphone</span>
+                <span data-lang="ar">امسح لفتح النموذج على هاتفك</span>
+              </h4>
+              <p class="text-xs text-leaf-700 leading-relaxed">
+                <span data-lang="en" class="lang-active">Point your camera at the code — or share this page anywhere.</span>
+                <span data-lang="fr">Pointez votre appareil photo vers le code — ou partagez cette page.</span>
+                <span data-lang="ar">وجّه كاميرتك نحو الرمز — أو شارك هذه الصفحة.</span>
+              </p>
+            </div>
+          </div>
         </div>
 
-        <!-- Google Form embed slot -->
+        <!-- Google Form embed -->
         <div class="lg:col-span-7">
           <div class="bg-sand-50 border border-leaf-100 rounded-3xl p-2 shadow-soft">
-            <!--
-              ============================================================
-              GOOGLE FORM EMBED
-              ------------------------------------------------------------
-              REPLACE the iframe `src` below with your Google Form's
-              embed URL once the form is ready.
 
-              How to get the embed URL:
-                1. Open your Google Form in edit mode.
-                2. Click "Send" (top right) → choose the <> (embed) icon.
-                3. Copy the value of the `src` attribute from the
-                   provided <iframe> snippet — it ends with
-                   "/viewform?embedded=true".
-                4. Paste it below in place of GOOGLE_FORM_EMBED_URL_HERE.
-
-              The placeholder UI below renders while no URL is set.
-              ============================================================
-            -->
-
-            <!-- PLACEHOLDER (visible while no form URL is configured) -->
-            <div id="form-placeholder" class="rounded-2xl bg-white border-2 border-dashed border-leaf-200 p-10 text-center">
-              <div class="w-14 h-14 mx-auto rounded-full bg-leaf-100 text-leaf-700 grid place-items-center mb-5">
-                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6M9 9h2"/></svg>
+            <!-- Header bar above the form -->
+            <div class="flex items-center justify-between gap-3 px-4 pt-3 pb-2">
+              <div class="flex items-center gap-2 text-leaf-800">
+                <span class="w-8 h-8 rounded-full bg-leaf-100 text-leaf-700 grid place-items-center flex-shrink-0">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6M9 9h2"/></svg>
+                </span>
+                <span class="text-sm font-semibold">
+                  <span data-lang="en" class="lang-active">Contact form</span>
+                  <span data-lang="fr">Formulaire de contact</span>
+                  <span data-lang="ar">نموذج التواصل</span>
+                </span>
               </div>
-              <h3 class="font-display font-bold text-xl text-leaf-900 mb-2">
-                <span data-lang="en" class="lang-active">Contact form coming soon</span>
-                <span data-lang="fr">Formulaire de contact bientôt disponible</span>
-                <span data-lang="ar">نموذج التواصل قريباً</span>
-              </h3>
-              <p class="text-sm text-leaf-800 max-w-md mx-auto leading-relaxed mb-6">
-                <span data-lang="en" class="lang-active">Our Google Form will be embedded here. In the meantime, write to us directly at <a href="mailto:contact@leafcode.dz" class="text-leaf-700 font-semibold underline">contact@leafcode.dz</a>.</span>
-                <span data-lang="fr">Notre formulaire Google sera intégré ici. En attendant, écrivez-nous directement à <a href="mailto:contact@leafcode.dz" class="text-leaf-700 font-semibold underline">contact@leafcode.dz</a>.</span>
-                <span data-lang="ar">سيتم تضمين نموذج Google هنا قريباً. في غضون ذلك، راسلنا مباشرة على <a href="mailto:contact@leafcode.dz" class="text-leaf-700 font-semibold underline">contact@leafcode.dz</a>.</span>
-              </p>
-              <a href="mailto:contact@leafcode.dz" class="inline-flex items-center gap-2 bg-leaf-700 hover:bg-leaf-800 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition">
-                <span data-lang="en" class="lang-active">Send Email</span>
-                <span data-lang="fr">Envoyer un email</span>
-                <span data-lang="ar">إرسال بريد</span>
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSfsxAfzf6Uk09MemHUfU7NFVbNJm8b6W1-FJfvW7iRIVITeEw/viewform?usp=dialog"
+                 target="_blank" rel="noopener"
+                 class="inline-flex items-center gap-1.5 text-xs font-semibold text-leaf-700 hover:text-leaf-800 transition">
+                <span data-lang="en" class="lang-active">Open in new tab</span>
+                <span data-lang="fr">Ouvrir dans un nouvel onglet</span>
+                <span data-lang="ar">فتح في علامة تبويب جديدة</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg>
               </a>
             </div>
 
-            <!-- ACTIVE FORM (uncomment + paste your URL) -->
-            <!--
+            <!-- Embedded Google Form -->
             <iframe
-              src="GOOGLE_FORM_EMBED_URL_HERE"
-              class="w-full rounded-2xl bg-white"
+              src="https://docs.google.com/forms/d/e/1FAIpQLSfsxAfzf6Uk09MemHUfU7NFVbNJm8b6W1-FJfvW7iRIVITeEw/viewform?embedded=true"
+              class="w-full rounded-2xl bg-white block"
               style="height: 900px; border: 0;"
-              loading="lazy">
-              Loading…
+              loading="lazy"
+              title="Leaf Code contact form">
+              <span data-lang="en" class="lang-active">Loading form…</span>
+              <span data-lang="fr">Chargement du formulaire…</span>
+              <span data-lang="ar">جاري تحميل النموذج…</span>
             </iframe>
-            -->
+
+            <!-- Fallback (shown when JS / iframe is disabled) -->
+            <noscript>
+              <div class="rounded-2xl bg-white border-2 border-dashed border-leaf-200 p-8 text-center">
+                <p class="text-sm text-leaf-800 mb-4">
+                  <span data-lang="en" class="lang-active">JavaScript is disabled — open the form directly:</span>
+                  <span data-lang="fr">JavaScript est désactivé — ouvrez le formulaire directement&nbsp;:</span>
+                  <span data-lang="ar">جافا سكريبت معطل — افتح النموذج مباشرة:</span>
+                </p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfsxAfzf6Uk09MemHUfU7NFVbNJm8b6W1-FJfvW7iRIVITeEw/viewform?usp=dialog"
+                   target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 bg-leaf-700 hover:bg-leaf-800 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition">
+                  <span data-lang="en" class="lang-active">Open contact form</span>
+                  <span data-lang="fr">Ouvrir le formulaire</span>
+                  <span data-lang="ar">افتح النموذج</span>
+                </a>
+              </div>
+            </noscript>
           </div>
         </div>
       </div>
@@ -1369,6 +1427,7 @@
           gyroscope: false,
         });
       }
+
     });
   </script>
 </body>
