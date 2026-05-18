@@ -7,10 +7,17 @@
   <title>Leaf Code — Better Tools. Better Decisions.</title>
   <meta name="description" content="Leaf Code is an Algerian AgriTech company designing precision agriculture and smart farming solutions — drones, IoT, AI, and agronomic platforms for crops, orchards, and livestock." />
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+
   <!-- SEO -->
   <meta property="og:title" content="Leaf Code — Better Tools. Better Decisions." />
   <meta property="og:description" content="Precision agriculture and smart farming solutions built in Algeria." />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/Leaf-Code-logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="assets/favicon.png" />
 
   <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -242,11 +249,12 @@
   <!-- ====================== NAV ====================== -->
   <header id="site-nav" class="fixed top-0 inset-x-0 z-50 backdrop-blur bg-white/85 border-b border-leaf-100">
     <div class="max-w-7xl mx-auto px-5 lg:px-8 h-16 flex items-center justify-between">
-      <a href="#top" class="flex items-center gap-2 group">
-        <svg viewBox="0 0 32 32" class="w-8 h-8 text-leaf-600 group-hover:text-leaf-700 transition" fill="currentColor" aria-hidden="true">
-          <path d="M16 2C9 2 3 8 3 16c0 7 5 13 13 14 0-7 4-13 10-15-1-7-5-13-10-13zm0 6c4 0 7 4 7 8s-3 8-7 8c0-5 3-9 7-10-4 1-7 4-7 6V8z"/>
-        </svg>
-        <span class="font-display font-bold text-lg tracking-tight">Leaf<span class="text-leaf-600">Code</span></span>
+      <a href="#top" class="flex items-center group" aria-label="Leaf Code — home">
+        <img src="assets/Leaf-Code-logo.png"
+             alt="Leaf Code"
+             width="1000" height="204"
+             class="h-9 w-auto group-hover:scale-[1.03] transition-transform"
+             decoding="async" />
       </a>
 
       <nav class="hidden md:flex items-center gap-7 text-sm font-medium">
@@ -1131,9 +1139,13 @@
     <footer class="bg-leaf-950 text-leaf-100 pt-16 pb-10">
       <div class="max-w-7xl mx-auto px-5 lg:px-8 grid md:grid-cols-12 gap-10">
         <div class="md:col-span-5">
-          <div class="flex items-center gap-2 mb-4">
-            <svg viewBox="0 0 32 32" class="w-8 h-8 text-leaf-300" fill="currentColor"><path d="M16 2C9 2 3 8 3 16c0 7 5 13 13 14 0-7 4-13 10-15-1-7-5-13-10-13zm0 6c4 0 7 4 7 8s-3 8-7 8c0-5 3-9 7-10-4 1-7 4-7 6V8z"/></svg>
-            <span class="font-display font-bold text-lg tracking-tight text-white">Leaf<span class="text-leaf-300">Code</span></span>
+          <div class="mb-5">
+            <img src="assets/Leaf-Code-logo.png"
+                 alt="Leaf Code"
+                 width="1000" height="204"
+                 class="h-10 w-auto"
+                 style="filter: brightness(0) invert(1);"
+                 loading="lazy" decoding="async" />
           </div>
           <p class="font-display font-semibold text-leaf-200 mb-3">
             <span data-lang="en" class="lang-active">Better Tools. Better Decisions.</span>
